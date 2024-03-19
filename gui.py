@@ -14,6 +14,7 @@ class GUI(tk.Tk):
       "Frame",
       "Label",
       "LabelFrame",
+      "Menu",
       "Menubutton",
       "PanedWindow",
       "Radiobutton",
@@ -31,7 +32,7 @@ class GUI(tk.Tk):
     pass
 
   def createAddWidgetMethod(self, widgetName):
-    def method(widgetId, **kwargs):
-      self.widgets[widgetId] = eval(f"tk.{widgetName}(**kwargs)", globals(), locals())
+    def method(widgetId, *args, **kwargs):
+      self.widgets[widgetId] = eval(f"tk.{widgetName}(*args, **kwargs)", globals(), locals())
       return self.widgets[widgetId]
     setattr(self, f"add{widgetName}", method)
