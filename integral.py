@@ -61,6 +61,7 @@ class DefiniteIntegral(BaseIntegral):
   def __init__(self, tex, a, b):
     """
     Initializes the definite integral instance
+    
     Parameters
     ----------
     tex : str

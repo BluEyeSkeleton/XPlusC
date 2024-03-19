@@ -1,3 +1,8 @@
+# Old files
+storage.py
+main_old.py
+lines.txt
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

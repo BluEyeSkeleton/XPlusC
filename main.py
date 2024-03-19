@@ -31,9 +31,5 @@ window.addLabel("desc", text="© 2024 TeamX+C. All rights reserved.", font=(envi
 widgets["title"].place(anchor=N, relx=0.5, rely=0.01)
 widgets["desc"].place(anchor=SW, relx=0.01, rely=0.99)
 
-#Test
-inte = DefiniteIntegral("(x+4)*(x-2)**8", 2, 3)
-print(inte.evaluate())
-
 # Loop it
 window.mainloop()
