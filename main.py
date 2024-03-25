@@ -3,44 +3,25 @@ from os import environ
 from dotenv import load_dotenv
 
 from gui import GUI
-from tkinter import *
 
-from pylatex import Document, Section, Subsection, Command
-from pylatex.utils import italic, NoEscape
-
-from integral import DefiniteIntegral
+import integration as inte
 
 # Load environment variables
 load_dotenv()
 
 # Initialize GUI instance
-window = GUI()
-w = window.widgets
-top = window.winfo_toplevel()
-
-# Configure GUI
-window.title("XPlusC: Master your integration skills")
-window.iconphoto(True, PhotoImage(file="img/favicon.png"))
-window.geometry("640x480")
-window.resizable(False, False)
-
-# Menu bar
-window.addMenu("menu", top)
-top["menu"] = w["menu"]
-
-# Sub menu
-window.addMenu("menu_home", w["menu"])
-w["menu"].add_cascade(label="Home", menu=w["menu_home"])
-
-# Add widgets
-window.addLabel("title", text="XPlusC", font=(environ["FONT_DEFAULT"], 24))
-window.addLabel("desc", text="© 2024 TeamX+C. All rights reserved.", font=(environ["FONT_DEFAULT"], 8))
-
-w["title"].place(anchor=N, relx=0.5, rely=0.01)
-w["desc"].place(anchor=SW, relx=0.01, rely=0.99)
+window = GUI(env=environ)
 
 # Test
-#inte = DefiniteIntegral("", 2, 3)
+CONFIG = {
+    "mode": inte.EXP_EULER,
+    "use_coefficient": True, # False: Only easy questions without coefficients
+    "fractional_coefficient": False, # False: only integers will be used for coefficients
+    "max_integer": 6, # Maximum integer to be used as digit
+    "min_integer": 2, # Minimum integer to be used as digit
+}
+(ques, ans) = inte.generate_definite_integral(CONFIG)
+window.show_question_answer(ques, ans)
 
 # Loop it
 window.mainloop()
