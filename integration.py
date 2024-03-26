@@ -4,7 +4,7 @@ from random import *
 from numpy import *
 from sympy import *
 from pylatex import *
-from latex2sympy2 import latex2sympy, latex2latex
+from latex2sympy2 import latex2sympy
 
 # Enums
 POWER_RULE = 0xa0
@@ -19,7 +19,7 @@ TRIGO_ADVANCED = 0xb1
 MODES = [
     POWER_RULE, POWER_RULE_LINEAR, POWER_RULE_LN, POWER_RULE_LN_LINEAR,
     EXP_EULER, EXP_INTEGER,
-    TRIGO_BASIC, TRIGO_ADVANCED,
+    #TRIGO_BASIC, TRIGO_ADVANCED,
 ]
 
 # Default configuration for question generator

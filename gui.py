@@ -9,7 +9,6 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 import integration as inte
 from random import *
-import sympy
 
 # Use TkAgg in the backend of tkinter application
 matplotlib.use('TkAgg')
@@ -60,12 +59,15 @@ class GUI(tk.Tk):
             "use_coefficient": BooleanVar(),
             "fractional_coefficient": BooleanVar(),
         }
+        self.vars["mode"].set(0)
+        self.vars["use_coefficient"].set(True)
+        self.vars["fractional_coefficient"].set(False)
 
         # Configure GUI
         self.title("XPlusC: Master your integration skills")
         self.iconphoto(True, PhotoImage(file="img/favicon.png"))
         self.geometry("640x480")
-        self.resizable(False, False)
+        self.resizable(True, True)
 
         # Add menu
         w["menu"] = Menu(top)
