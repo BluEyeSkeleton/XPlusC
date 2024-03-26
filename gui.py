@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 import integration as inte
-
+from random import *
 import sympy
 
 # Use TkAgg in the backend of tkinter application
@@ -33,6 +33,23 @@ class GUI(tk.Tk):
 
     def init(self):
         pass
+
+    def mainloop(self):
+        self.render_mainwindow()
+        # Perform first update
+        self.__on_update()
+        super().mainloop()
+
+    def set_handlers(self, on_update, on_show_answer):
+        w = self.mainwindow_widgets
+        self.__on_update = on_update
+        self.__on_show_answer = on_show_answer
+        w["btn_shuffle"].config(command=self.__on_update)
+        w["btn_answer"].config(command=self.__on_show_answer)
+        w["btn_shuffle"].place(anchor=W, relx=0.1, rely=0.8)
+        w["btn_answer"].place(anchor=E, relx=0.9, rely=0.8)
+
+        self.vars["mode"].trace_add("write", self.__on_update)
   
     def render_mainwindow(self):
         w = self.mainwindow_widgets
@@ -43,10 +60,6 @@ class GUI(tk.Tk):
             "use_coefficient": BooleanVar(),
             "fractional_coefficient": BooleanVar(),
         }
-        def __mode(*args):
-            self.config["mode"] = self.vars["mode"].get()
-            print(self.config["mode"])
-        self.vars["mode"].trace_add("write", __mode)
 
         # Configure GUI
         self.title("XPlusC: Master your integration skills")
@@ -62,6 +75,9 @@ class GUI(tk.Tk):
         w["menu_mode"] = Menu(w["menu"], tearoff=False)
         w["menu"].add_cascade(label="Mode", menu=w["menu_mode"])
 
+        w["menu_mode"].add_radiobutton(
+            label="Random", \
+                variable=self.vars["mode"], value=0)
         w["menu_mode"].add_radiobutton(
             label="Power Rule (Basic)", \
                 variable=self.vars["mode"], value=inte.POWER_RULE)
@@ -81,6 +97,10 @@ class GUI(tk.Tk):
         w["desc"] = Label(text="© 2024 TeamX+C. All rights reserved.",
                           font=(self.__env["FONT_DEFAULT"], 8))
         w["canvas_master"] = Label()
+        w["btn_shuffle"] = Button(text="Shuffle",
+                                  font=(self.__env["FONT_DEFAULT"], 24))
+        w["btn_answer"] = Button(text="Show Answer",
+                                  font=(self.__env["FONT_DEFAULT"], 24))
 
         # Define the figure size and plot the figure
         fig = matplotlib.figure.Figure(figsize=(7, 2), dpi=100)
@@ -101,11 +121,11 @@ class GUI(tk.Tk):
     def show_question(self, tex):
         # Clear any previous Syntax from the figure
         self.wx.clear()
-        self.wx.text(0.2, 0.2, f"${tex}$", fontsize = 24)
+        self.wx.text(0.1, 0.5, f"${tex}$", fontsize = 24)
         self.canvas.draw()
 
     def show_question_answer(self, tex_ques, tex_ans):
         # Clear any previous Syntax from the figure
         self.wx.clear()
-        self.wx.text(0.1, 0.75, f"${tex_ques} = {tex_ans}$", fontsize = 24, va="top", ha="left")
+        self.wx.text(0.1, 0.5, f"${tex_ques} = {tex_ans}$", fontsize = 24)
         self.canvas.draw()

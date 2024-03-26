@@ -3,25 +3,31 @@ from os import environ
 from dotenv import load_dotenv
 
 from gui import GUI
+from random import *
 
 import integration as inte
 
 # Load environment variables
 load_dotenv()
+ques = None
+ans = None
 
 # Initialize GUI instance
 window = GUI(env=environ)
 
-# Test
-CONFIG = {
-    "mode": inte.EXP_EULER,
-    "use_coefficient": True, # False: Only easy questions without coefficients
-    "fractional_coefficient": False, # False: only integers will be used for coefficients
-    "max_integer": 6, # Maximum integer to be used as digit
-    "min_integer": 2, # Minimum integer to be used as digit
-}
-(ques, ans) = inte.generate_definite_integral(CONFIG)
-window.show_question_answer(ques, ans)
+# On update
+def on_update():
+    global ques, ans, window
+    window.config["mode"] = \
+        window.vars["mode"].get() if window.vars["mode"].get() != 0 \
+            else choice(inte.MODES)
+    
+    (ques, ans) = inte.generate_definite_integral(window.config)
+    window.show_question(ques)
+def on_show_answer():
+    global ques, ans, window
+    window.show_question_answer(ques, ans)
+window.set_handlers(on_update, on_show_answer)
 
 # Loop it
 window.mainloop()

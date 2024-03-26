@@ -68,12 +68,12 @@ def __eqn(config=DEFAULT_CONFIG):
     elif (config["mode"] == EXP_EULER):
         return __add_coeff(__pow("e", linear), config)
     elif (config["mode"] == EXP_INTEGER):
-        return __add_coeff(__pow(__coeff(config), linear), config)
+        return __pow(__coeff(config), linear)
 
 def generate_definite_integral(config=DEFAULT_CONFIG):
     tex = __eqn(config)
     tex_ques = f"\\int {tex} \\,dx"
 
     x = Symbol("x")
-    tex_ans = latex(integrate(latex2sympy(tex), x), ln_notation=True) + "+C"
+    tex_ans = latex(factor(integrate(latex2sympy(tex), x)), ln_notation=True) + "+C"
     return tex_ques, tex_ans
