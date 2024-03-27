@@ -146,7 +146,7 @@ class GUI(tk.Tk):
             label="Exponent (Integer)", \
                 variable=self.vars["mode"], value=inte.EXP_INTEGER)
         w["menu_mode"].add_radiobutton(
-            label="Trigonometry", \
+            label="Trigonometry (Basic)", \
                 variable=self.vars["mode"], value=inte.TRIGO)
         w["menu_mode"].add_radiobutton(
             label="Trigonometry (Linear)", \
