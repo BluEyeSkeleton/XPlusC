@@ -1,7 +1,5 @@
-# Old files
-storage.py
-main_old.py
-lines.txt
+# My files
+compile.bat
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

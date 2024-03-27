@@ -3,6 +3,7 @@ from random import *
 
 from numpy import *
 from sympy import *
+from sympy.integrals.manualintegrate import manualintegrate
 from pylatex import *
 from latex2sympy2 import latex2sympy
 
@@ -13,13 +14,13 @@ POWER_RULE_LN = 0xa2
 POWER_RULE_LN_LINEAR = 0xa3
 EXP_EULER = 0xe0
 EXP_INTEGER = 0xe1
-TRIGO_BASIC = 0xb0
-TRIGO_ADVANCED = 0xb1
+TRIGO = 0xb0
+TRIGO_LINEAR = 0xb1
 
 MODES = [
     POWER_RULE, POWER_RULE_LINEAR, POWER_RULE_LN, POWER_RULE_LN_LINEAR,
     EXP_EULER, EXP_INTEGER,
-    #TRIGO_BASIC, TRIGO_ADVANCED,
+    TRIGO, TRIGO_LINEAR,
 ]
 
 # Default configuration for question generator
@@ -51,10 +52,14 @@ def __coeff(config=DEFAULT_CONFIG):
 
 def __add_coeff(x, config=DEFAULT_CONFIG):
     i = __coeff(config)
-    return __frac(x, i) if config["fractional_coefficient"] else f"{i}{x}"
+    if not config["use_coefficient"]:
+        return x
+    use_frac = choice([config["fractional_coefficient"], False])
+    return __frac(x, i) if use_frac else f"{i}{x}"
 
 def __eqn(config=DEFAULT_CONFIG):
-    linear = __add_coeff("x", config) + "+" + __coeff(config)
+    linear = __add_coeff("x", config) + "+" + __coeff(config) \
+        if config["use_coefficient"] else "x"
     if (config["mode"] == POWER_RULE):
         return __add_coeff(__pow("x", __coeff(config)), config)
     elif (config["mode"] == POWER_RULE_LINEAR):
@@ -69,11 +74,18 @@ def __eqn(config=DEFAULT_CONFIG):
         return __add_coeff(__pow("e", linear), config)
     elif (config["mode"] == EXP_INTEGER):
         return __pow(__coeff(config), linear)
+    elif (config["mode"] == TRIGO):
+        func = choice([__sin, __cos])
+        return __add_coeff(func("x"), config)
+    elif (config["mode"] == TRIGO_LINEAR):
+        func = choice([__sin, __cos])
+        return __add_coeff(func(linear, True), config)
 
 def generate_definite_integral(config=DEFAULT_CONFIG):
     tex = __eqn(config)
     tex_ques = f"\\int {tex} \\,dx"
 
     x = Symbol("x")
-    tex_ans = latex(factor(integrate(latex2sympy(tex), x)), ln_notation=True) + "+C"
+    ans = manualintegrate(latex2sympy(tex), x)
+    tex_ans = latex(ans, ln_notation=True) + "+C"
     return tex_ques, tex_ans
