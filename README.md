@@ -9,6 +9,7 @@ Visit our official website [here](https://integration.is-great.org/)!
 Download the [latest release](https://github.com/BluEyeSkeleton/XPlusC/releases/latest/download/XPlusC.zip) onto your computer. Unzip it and launch `XPlusC.exe` from the unzipped folder.
 
 > **NOTE:** This program was tested on **Windows 11** operating system only, and might not work with other operating systems.
+> Please ignore any virus/trojan warnings from your antivirus program as this program is falsely flagged as malicious somehow.
 
 ## How to use?
 
