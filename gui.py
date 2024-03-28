@@ -42,7 +42,7 @@ class GUI(tk.Tk):
     def mainloop(self):
         # Perform first update
         self.__on_update()
-        super().mainloop(0)
+        super().mainloop()
 
     # Called to generate new question and answer
     def __on_update(self, *_):
@@ -65,7 +65,8 @@ class GUI(tk.Tk):
         val = askinteger("Enter value", \
                             "Enter the maximum integer value " + \
                             "to be used as coefficient and power:", \
-                            initialvalue=self.config["max_integer"])
+                            initialvalue=self.config["max_integer"], \
+                            minvalue=2, maxvalue=9)
         if (val == None):
             return
         if (val <= self.config["min_integer"]):
@@ -79,7 +80,8 @@ class GUI(tk.Tk):
         val = askinteger("Enter value", \
                             "Enter the minimum integer value " + \
                             "to be used as coefficient and power:", \
-                            initialvalue=self.config["min_integer"])
+                            initialvalue=self.config["min_integer"], \
+                            minvalue=2, maxvalue=9)
         if (val == None):
             return
         if (val >= self.config["max_integer"]):
