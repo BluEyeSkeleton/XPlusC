@@ -4,6 +4,8 @@ A Python program created by **TeamX+C**. Generates integration questions and ver
 
 Visit our official website [here](https://integration.is-great.org/)!
 
+![XPlusC](https://i.imgur.com/Ls3EMCe.png)
+
 ## Installation
 
 Download the [latest release](https://github.com/BluEyeSkeleton/XPlusC/releases/latest/download/XPlusC.zip) onto your computer. Unzip it and launch `XPlusC.exe` from the unzipped folder.
